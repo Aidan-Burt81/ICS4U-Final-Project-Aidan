@@ -2,9 +2,9 @@ import { Scene, GameObjects } from 'phaser';
 
 export class MainMenu extends Scene
 {
-    background: GameObjects.Image;
-    logo: GameObjects.Image;
-    title: GameObjects.Text;
+    background: GameObjects.Image | undefined;
+    logo: GameObjects.Image | undefined;
+    title: GameObjects.Text | undefined;
 
     constructor ()
     {

@@ -2,9 +2,9 @@ import { Scene } from 'phaser';
 
 export class Game extends Scene
 {
-    camera: Phaser.Cameras.Scene2D.Camera;
-    background: Phaser.GameObjects.Image;
-    msg_text : Phaser.GameObjects.Text;
+    camera: Phaser.Cameras.Scene2D.Camera | undefined;
+    background: Phaser.GameObjects.Image | undefined;
+    msg_text : Phaser.GameObjects.Text | undefined;
 
     constructor ()
     {
@@ -16,7 +16,7 @@ export class Game extends Scene
         this.camera = this.cameras.main;
         this.camera.setBackgroundColor(0x00ff00);
 
-        this.background = this.add.image(512, 384, 'background');
+        this.background = this.add.image(460, 1080, 'background');
         this.background.setAlpha(0.5);
 
         this.msg_text = this.add.text(512, 384, 'Hello, World!', {

@@ -1,10 +1,3 @@
-/*
- * This is the main code that runs
- * By: Aidan Burt
- * Version: 1.0
- * Since: 2024-05-21
- */
-
 import { Boot } from './scenes/Boot';
 import { Game as MainGame } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
@@ -17,20 +10,13 @@ import { Game, Types } from "phaser";
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 const config: Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    width: 400,
-    height: 1080,
+    width: 1024,
+    height: 768,
     parent: 'game-container',
     backgroundColor: '#028af8',
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    physics: {
-        default: 'arcade',
-        arcade: {
-          gravity: {x: 0, y: 3000 },
-          debug: false
-        }
     },
     scene: [
         Boot,
