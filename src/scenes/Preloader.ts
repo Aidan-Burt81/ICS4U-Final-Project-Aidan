@@ -1,46 +1,29 @@
-import { Scene } from 'phaser';
+import Phaser from 'phaser'
 
-export class Preloader extends Scene
-{
-    constructor ()
-    {
-        super('Preloader');
-    }
+export default class PreloaderScene extends Phaser.Scene {
+  constructor() {
+    super('PreloaderScene')
+  }
 
-    init ()
-    {
-        //  We loaded this image in our Boot Scene, so we can display it here
-        this.add.image(512, 384, 'background');
+  preload() {
+    // Add a loading text
+    const loadingText = this.add.text(400, 300, 'Loading...', {
+      fontSize: '32px',
+      fill: '#fff'
+    })
+    loadingText.setOrigin(0.5, 0.5)
 
-        //  A simple progress bar. This is the outline of the bar.
-        this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
+    // Load assets
+    this.load.image('player', 'assets/player.png')
+    this.load.image('opponent', 'assets/opponent.png')
+    this.load.image('puck', 'assets/puck.png')
+    this.load.image('background', 'assets/background.png')
 
-        //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-        const bar = this.add.rectangle(512-230, 384, 4, 28, 0xffffff);
+    // Load other assets (if any) such as sounds, additional images, etc.
+    // this.load.audio('hitSound', 'assets/hit.mp3')
+  }
 
-        //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
-        this.load.on('progress', (progress: number) => {
-
-            //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
-            bar.width = 4 + (460 * progress);
-
-        });
-    }
-
-    preload ()
-    {
-        //  Load the assets for the game - Replace with your own assets
-        this.load.setPath('assets');
-
-        this.load.image('logo', 'vertical-abstract-realistic-dark-gray-background-vector.png');
-    }
-
-    create ()
-    {
-        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-        //  For example, you can define global animations here, so we can use them in other scenes.
-
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
-    }
+  create() {
+    this.scene.start('MainMenuScene')
+  }
 }

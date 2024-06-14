@@ -1,35 +1,53 @@
-import { Scene } from 'phaser';
+import Phaser from 'phaser'
 
-export class GameOver extends Scene
-{
-    camera: Phaser.Cameras.Scene2D.Camera | undefined;
-    background: Phaser.GameObjects.Image | undefined;
-    gameover_text : Phaser.GameObjects.Text | undefined;
+export default class GameOverScene extends Phaser.Scene {
+  private winner: string
+  private playerScore: number
+  private opponentScore: number
 
-    constructor ()
-    {
-        super('GameOver');
-    }
+  constructor() {
+    super('GameOverScene')
+  }
 
-    create ()
-    {
-        this.camera = this.cameras.main
-        this.camera.setBackgroundColor(0xff0000);
+  init(data: { playerScore: number; opponentScore: number }) {
+    this.playerScore = data.playerScore
+    this.opponentScore = data.opponentScore
+    this.winner = this.playerScore > this.opponentScore ? 'Player' : 'Opponent'
+  }
 
-        this.background = this.add.image(512, 384, 'background');
-        this.background.setAlpha(0.5);
+  preload() {
+    this.load.image('background', 'assets/background.png')
+  }
 
-        this.gameover_text = this.add.text(512, 384, 'Game Over', {
-            fontFamily: 'Arial Black', fontSize: 64, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        });
-        this.gameover_text.setOrigin(0.5);
+  create() {
+    this.add.image(400, 300, 'background')
 
-        this.input.once('pointerdown', () => {
+    const titleText = this.add.text(400, 200, 'Game Over', {
+      fontSize: '64px',
+      fill: '#fff'
+    })
+    titleText.setOrigin(0.5, 0.5)
 
-            this.scene.start('MainMenu');
+    const winnerText = this.add.text(400, 300, `${this.winner} Wins!`, {
+      fontSize: '48px',
+      fill: '#fff'
+    })
+    winnerText.setOrigin(0.5, 0.5)
 
-        });
-    }
+    const scoreText = this.add.text(400, 400, `Player: ${this.playerScore}  Opponent: ${this.opponentScore}`, {
+      fontSize: '32px',
+      fill: '#fff'
+    })
+    scoreText.setOrigin(0.5, 0.5)
+
+    const restartText = this.add.text(400, 500, 'Press R to Restart', {
+      fontSize: '32px',
+      fill: '#fff'
+    })
+    restartText.setOrigin(0.5, 0.5)
+
+    this.input.keyboard.on('keydown-R', () => {
+      this.scene.start('AirHockeyGame')
+    })
+  }
 }
