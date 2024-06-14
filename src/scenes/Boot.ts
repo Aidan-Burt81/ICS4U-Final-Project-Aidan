@@ -1,22 +1,22 @@
-import { Scene } from 'phaser';
+import Phaser from 'phaser'
 
-export class Boot extends Scene
-{
-    constructor ()
-    {
-        super('Boot');
-    }
+export default class BootScene extends Phaser.Scene {
+  constructor() {
+    super('BootScene')
+  }
 
-    preload ()
-    {
-        //  The Boot Scene is typically used to load in any assets you require for your Preloader, such as a game logo or background.
-        //  The smaller the file size of the assets, the better, as the Boot Scene itself has no preloader.
+  preload() {
+    // Here you can load any assets that are necessary for the preloader
+    this.load.image('logo', 'assets/logo.png')
+  }
 
-        this.load.image('background', 'assets/bg.png');
-    }
+  create() {
+    // Add the logo to the center of the screen
+    this.add.image(400, 300, 'logo')
 
-    create ()
-    {
-        this.scene.start('Preloader');
-    }
+    // Set a timeout to transition to the PreloaderScene after a short delay
+    this.time.delayedCall(1000, () => {
+      this.scene.start('PreloaderScene')
+    })
+  }
 }

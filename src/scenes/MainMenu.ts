@@ -1,32 +1,31 @@
-import { Scene, GameObjects } from 'phaser';
+import Phaser from 'phaser'
 
-export class MainMenu extends Scene
-{
-    background: GameObjects.Image | undefined;
-    logo: GameObjects.Image | undefined;
-    title: GameObjects.Text | undefined;
+export default class MainMenuScene extends Phaser.Scene {
+  constructor() {
+    super('MainMenuScene')
+  }
 
-    constructor ()
-    {
-        super('MainMenu');
-    }
+  preload() {
+    this.load.image('background', 'assets/background.png')
+  }
 
-    create ()
-    {
-        this.background = this.add.image(512, 384, 'background');
+  create() {
+    this.add.image(400, 300, 'background')
 
-        this.logo = this.add.image(512, 300, 'logo');
+    const titleText = this.add.text(400, 200, 'Air Hockey Game', {
+      fontSize: '64px',
+      fill: '#fff'
+    })
+    titleText.setOrigin(0.5, 0.5)
 
-        this.title = this.add.text(512, 460, 'Main Menu', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setOrigin(0.5);
+    const startText = this.add.text(400, 300, 'Press S to Start', {
+      fontSize: '32px',
+      fill: '#fff'
+    })
+    startText.setOrigin(0.5, 0.5)
 
-        this.input.once('pointerdown', () => {
-
-            this.scene.start('Game');
-
-        });
-    }
+    this.input.keyboard.on('keydown-S', () => {
+      this.scene.start('AirHockeyGame')
+    })
+  }
 }
